@@ -199,7 +199,7 @@ form.addEventListener("submit", async (event)=>{
   for (const item of items){
     messageLines.push(`کد ${item.code} - ${item.color} | ${packageLabels[item.package_type]}: ${item.quantity}`);
   }
-  const whatsappUrl = `https://web.whatsapp.com/send?phone=989103146593&text=${encodeURIComponent(messageLines.join("\n"))}`;
+  const whatsappUrl = `https://wa.me/989103146593?text=${encodeURIComponent(messageLines.join("\n"))}`;
 
   // پنجره را همین حالا باز می‌کنیم تا مرورگر آن را مسدود نکند.
   const whatsappWindow = window.open("about:blank", "_blank");
