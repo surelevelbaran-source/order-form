@@ -199,9 +199,14 @@ form.addEventListener("submit", async (event)=>{
   for (const item of items){
     messageLines.push(`کد ${item.code} - ${item.color} | ${packageLabels[item.package_type]}: ${item.quantity}`);
   }
-  const whatsappUrl = `https://wa.me/989103146593?text=${encodeURIComponent(messageLines.join("\n"))}`;
+  const encodedMessage = encodeURIComponent(messageLines.join("\n"));
+  const whatsappWebUrl = `https://wa.me/989103146593?text=${encodedMessage}`;
+  // روی گوشی از پیوند اپلیکیشن استفاده می‌کنیم؛ روی کامپیوتر نسخه وب باز می‌شود.
+  const isMobileDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  const whatsappAppUrl = `whatsapp://send?phone=989103146593&text=${encodedMessage}`;
+  const whatsappUrl = isMobileDevice ? whatsappAppUrl : whatsappWebUrl;
 
-  // پنجره را همین حالا باز می‌کنیم تا مرورگر آن را مسدود نکند.
+  // پنجره را در لحظه کلیک باز می‌کنیم تا مسدود نشود.
   const whatsappWindow = window.open("about:blank", "_blank");
   submitBtn.disabled = true;
   submitBtn.textContent = "در حال ثبت…";
@@ -222,17 +227,18 @@ form.addEventListener("submit", async (event)=>{
     form.reset();
     if (whatsappWindow){
       whatsappWindow.location.href = whatsappUrl;
-      showStatus("سفارش در سیستم ثبت شد. واتساپ باز می‌شود؛ لطفاً در واتساپ دکمه ارسال را بزنید تا سفارش برای شرکت فرستاده شود.", "ok");
+      showStatus("سفارش در سیستم ثبت شد. اگر اپ واتساپ باز شد، دکمه ارسال را بزنید تا سفارش برای شرکت فرستاده شود. اگر باز نشد، از لینک جایگزین زیر استفاده کنید.", "ok");
     } else {
-      showStatus("سفارش در سیستم ثبت شد، اما مرورگر پنجره واتساپ را مسدود کرد. روی لینک زیر بزنید تا سفارش را ارسال کنید.", "ok");
-      const link = document.createElement("a");
-      link.href = whatsappUrl;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = "باز کردن واتساپ و ارسال سفارش";
-      statusBox.appendChild(document.createElement("br"));
-      statusBox.appendChild(link);
+      showStatus("سفارش در سیستم ثبت شد. برای ارسال پیام به شرکت، از لینک زیر استفاده کنید.", "ok");
     }
+    // لینک جایگزین رسمی در صورت غیرفعال بودن پیوند اپلیکیشن
+    const fallbackLink = document.createElement("a");
+    fallbackLink.href = whatsappWebUrl;
+    fallbackLink.target = "_blank";
+    fallbackLink.rel = "noopener noreferrer";
+    fallbackLink.textContent = "اگر واتساپ باز نشد، اینجا بزنید";
+    statusBox.appendChild(document.createElement("br"));
+    statusBox.appendChild(fallbackLink);
     window.scrollTo({top:0,behavior:"smooth"});
   }catch(error){
     if (whatsappWindow && !whatsappWindow.closed) whatsappWindow.close();
