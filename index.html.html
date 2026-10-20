@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172a3d">
+<title>فرم سفارش رنگ و کد محصول</title>
+<style>
+:root{--navy:#172a3d;--gold:#a87916;--teal:#086779;--line:#c8d2dc;--stripe:#edf3f7;--ink:#17202b}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fa;color:var(--ink);font-family:Tahoma,Arial,sans-serif}
+.wrap{max-width:1450px;margin:0 auto;padding:18px}
+.hero{background:linear-gradient(115deg,#172a3d,#244760);color:#fff;border-radius:16px;padding:22px 24px;margin-bottom:16px}
+.hero h1{margin:0 0 8px;font-size:clamp(21px,3vw,30px)}
+.hero p{margin:0;line-height:1.9;color:#e4edf4;font-size:14px}
+.customer{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:#fff;padding:16px;border:1px solid var(--line);border-radius:14px;margin-bottom:16px}
+.field label{display:block;font-size:14px;font-weight:bold;margin-bottom:7px}
+.field input{width:100%;height:44px;border:1px solid #b8c6d3;border-radius:9px;padding:8px 11px;font:inherit;background:#fff}
+.field input:focus,.qty:focus{outline:2px solid #86b8cf;outline-offset:1px}
+.table-shell{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:900px;table-layout:fixed}
+th,td{border-left:1px solid #c3ced8;border-bottom:1px solid #d6dfe7;text-align:center;padding:8px 7px}
+th:last-child,td:last-child{border-left:0}
+thead th{color:white;font-size:14px;line-height:1.5}
+.head-basic{background:var(--navy)}
+.head-5{background:var(--gold)}
+.head-1{background:var(--teal)}
+thead .sub th{border-top:1px solid rgba(255,255,255,.55)}
+tbody tr:nth-child(odd){background:#fff}
+tbody tr:nth-child(even){background:var(--stripe)}
+tbody tr:last-child td{border-bottom:0}
+.code{font-weight:bold;font-size:15px;width:90px}
+.color-cell{text-align:right}
+.color-wrap{display:flex;align-items:center;gap:10px;padding-right:8px}
+.dot{width:19px;height:19px;flex:0 0 19px;border-radius:50%;border:1px solid #0002;box-shadow:inset 0 0 0 1px #ffffff35}
+.color-name{font-size:14px}
+.qty{width:100%;min-width:68px;height:37px;border:1px solid #b9c8d5;border-radius:7px;background:#fff;text-align:center;font:inherit;font-size:14px;padding:4px}
+.qty::-webkit-inner-spin-button,.qty::-webkit-outer-spin-button{opacity:1}
+.actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}
+button{border:0;border-radius:10px;padding:13px 22px;font:inherit;font-weight:bold;cursor:pointer}
+.submit{background:#087b64;color:white}
+.submit:disabled{opacity:.65;cursor:wait}
+.reset{background:#e7edf2;color:#203244}
+.status{margin-top:12px;padding:12px 14px;border-radius:10px;display:none;line-height:1.8}
+.status.ok{display:block;background:#e6f7ef;color:#12633f;border:1px solid #a8ddc1}
+.status.err{display:block;background:#fff0ed;color:#a33222;border:1px solid #efb6ad}
+.small-note{font-size:12px;color:#5d6b79;line-height:1.8;margin:12px 2px}
+@media(max-width:650px){.wrap{padding:10px}.hero{padding:18px}.customer{grid-template-columns:1fr;padding:12px}.color-name{font-size:13px}.actions button{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>فرم سفارش رنگ و کد محصول</h1>
+    <p>مشخصات خود را وارد کنید و تعداد موردنیاز هر رنگ را در ستون‌های مربوط به وزن ۵ کیلویی و ۱ کیلویی بنویسید. خانه‌های بدون سفارش را خالی بگذارید.</p>
+  </header>
+
+  <form id="orderForm">
+    <section class="customer">
+      <div class="field">
+        <label for="customerName">نام و نام خانوادگی مشتری *</label>
+        <input id="customerName" name="customerName" autocomplete="name" required maxlength="120" placeholder="نام مشتری">
+      </div>
+      <div class="field">
+        <label for="customerPhone">شماره تماس *</label>
+        <input id="customerPhone" name="customerPhone" autocomplete="tel" required maxlength="30" inputmode="tel" placeholder="شماره تماس">
+      </div>
+    </section>
+
+    <div class="table-shell">
+      <div class="scroll">
+        <table aria-label="جدول سفارش رنگ‌ها">
+          <colgroup>
+            <col style="width:90px"><col style="width:205px">
+            <col><col><col><col>
+          </colgroup>
+          <thead>
+            <tr>
+              <th rowspan="2" class="head-basic">کد<br>Code</th>
+              <th rowspan="2" class="head-basic">رنگ<br>Color</th>
+              <th colspan="2" class="head-5">وزن ۵ کیلویی<br>Weight (5 KG)</th>
+              <th colspan="2" class="head-1">وزن ۱ کیلویی<br>Weight (1 KG)</th>
+            </tr>
+            <tr class="sub">
+              <th class="head-5">کارتن<br>Carton</th>
+              <th class="head-5">عدد<br>Piece</th>
+              <th class="head-1">کارتن<br>Carton</th>
+              <th class="head-1">عدد<br>Piece</th>
+            </tr>
+          </thead>
+          <tbody id="colorRows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="submit" id="submitBtn">ثبت سفارش</button>
+      <button type="reset" class="reset">پاک کردن فرم</button>
+    </div>
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+    <p class="small-note">* فیلدهای نام و شماره تماس الزامی هستند. برای ثبت سفارش، دست‌کم یک تعداد وارد کنید. اطلاعات هر مشتری به‌صورت یک سفارش مستقل ثبت می‌شود.</p>
+  </form>
+</div>
+
+<script>
+/*
+  قبل از انتشار:
+  1) در Supabase یک پروژه بسازید.
+  2) فایل setup.sql را در SQL Editor اجرا کنید.
+  3) Project URL و anon/public key را از Project Settings > API بردارید.
+  4) مقادیر پایین را جایگزین کنید.
+  هرگز service_role key را در این فایل قرار ندهید.
+*/
+const SUPABASE_URL = "https://wnwarcosszpoykrokraw.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_J5h-Dvec_aZMRc_pMCPZsg_nqM439eB";
+
+const colors = [
+ ["100","White","#ffffff"],["190","Silver","#bfc3c7"],["200","Black","#050505"],
+ ["194","Lead Gray","#606a73"],["120","Cream","#f4dfbd"],["131","Beige","#e7c7a1"],
+ ["193","Gray","#858c93"],["187","Ocean Blue","#0875c9"],["180","Light Blue","#76c8f2"],
+ ["177","Turquoise","#16a8b6"],["172","Grass Green","#279b50"],["171","Mint Green","#7bcdb7"],
+ ["170","Khaki","#bda77c"],
+ ["145","Brick Red","#a72f22"],["140","Pink","#e95e91"],
+ ["138","Chocolate Brown","#70401d"],["136","Khaki","#9d8e59"],["135","Brown","#4c2b17"],
+ ["128","Honey","#f3b300"],["122","Vanilla","#f0ddc4"],
+ ["130","Lilac","#aa8ac4"],
+];
+const tbody = document.getElementById("colorRows");
+colors.forEach(([code,name,hex])=>{
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td class="code">${code}</td>
+    <td class="color-cell"><div class="color-wrap"><span class="dot" style="background:${hex}" aria-hidden="true"></span><span class="color-name">${name}</span></div></td>
+    <td><input class="qty" type="number" min="0" step="1" inputmode="numeric" aria-label="${code} ${name}، کارتن ۵ کیلویی" data-code="${code}" data-color="${name}" data-pack="5kg_carton"></td>
+    <td><input class="qty" type="number" min="0" step="1" inputmode="numeric" aria-label="${code} ${name}، عدد ۵ کیلویی" data-code="${code}" data-color="${name}" data-pack="5kg_piece"></td>
+    <td><input class="qty" type="number" min="0" step="1" inputmode="numeric" aria-label="${code} ${name}، کارتن ۱ کیلویی" data-code="${code}" data-color="${name}" data-pack="1kg_carton"></td>
+    <td><input class="qty" type="number" min="0" step="1" inputmode="numeric" aria-label="${code} ${name}، عدد ۱ کیلویی" data-code="${code}" data-color="${name}" data-pack="1kg_piece"></td>`;
+  tbody.appendChild(tr);
+});
+
+const form = document.getElementById("orderForm");
+const statusBox = document.getElementById("status");
+const submitBtn = document.getElementById("submitBtn");
+function showStatus(message, kind){
+  statusBox.textContent = message;
+  statusBox.className = "status " + kind;
+}
+form.addEventListener("reset",()=>{
+  statusBox.className="status";
+  statusBox.textContent="";
+});
+form.addEventListener("submit", async (event)=>{
+  event.preventDefault();
+  statusBox.className="status";
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const inputs = [...document.querySelectorAll(".qty")];
+  const items = [];
+  for (const input of inputs){
+    if (input.value !== ""){
+      const quantity = Number(input.value);
+      if (!Number.isInteger(quantity) || quantity < 0){
+        showStatus("تعدادها باید عدد صحیح و صفر یا بیشتر باشند.", "err");
+        input.focus(); return;
+      }
+      if (quantity > 0){
+        items.push({
+          code: input.dataset.code,
+          color: input.dataset.color,
+          package_type: input.dataset.pack,
+          quantity
+        });
+      }
+    }
+  }
+  if (!items.length){
+    showStatus("لطفاً تعداد دست‌کم یک محصول را وارد کنید.", "err");
+    return;
+  }
+  if (SUPABASE_URL.includes("PASTE_YOUR") || SUPABASE_ANON_KEY.includes("PASTE_YOUR")){
+    showStatus("فرم هنوز به پایگاه داده وصل نشده است. برای فعال شدن ثبت سفارش، مراحل فایل راهنما را انجام دهید.", "err");
+    return;
+  }
+  // متن واتساپ را آماده می‌کنیم؛ سفارش ابتدا در Supabase ثبت خواهد شد.
+  const packageLabels = {
+    "5kg_carton": "کارتن ۵ کیلویی",
+    "5kg_piece": "عدد ۵ کیلویی",
+    "1kg_carton": "کارتن ۱ کیلویی",
+    "1kg_piece": "عدد ۱ کیلویی"
+  };
+  const messageLines = [
+    "سلام، سفارش جدید ثبت شده است.",
+    `نام مشتری: ${name}`,
+    `شماره تماس مشتری: ${phone}`,
+    "",
+    "جزئیات سفارش:"
+  ];
+  for (const item of items){
+    messageLines.push(`کد ${item.code} - ${item.color} | ${packageLabels[item.package_type]}: ${item.quantity}`);
+  }
+  const whatsappUrl = `https://wa.me/989103146593?text=${encodeURIComponent(messageLines.join("\n"))}`;
+
+  // پنجره را همین حالا باز می‌کنیم تا مرورگر آن را مسدود نکند.
+  const whatsappWindow = window.open("about:blank", "_blank");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "در حال ثبت…";
+  try{
+    const response = await fetch(`${SUPABASE_URL.replace(/\/$/,"")}/rest/v1/orders`, {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "apikey":SUPABASE_ANON_KEY,
+        "Prefer":"return=minimal"
+      },
+      body:JSON.stringify({customer_name:name, customer_phone:phone, items})
+    });
+    if (!response.ok){
+      const err = await response.text();
+      throw new Error(err || `HTTP ${response.status}`);
+    }
+    form.reset();
+    if (whatsappWindow){
+      whatsappWindow.location.href = whatsappUrl;
+      showStatus("سفارش در سیستم ثبت شد. واتساپ باز می‌شود؛ لطفاً در واتساپ دکمه ارسال را بزنید تا سفارش برای شرکت فرستاده شود.", "ok");
+    } else {
+      showStatus("سفارش در سیستم ثبت شد، اما مرورگر پنجره واتساپ را مسدود کرد. روی لینک زیر بزنید تا سفارش را ارسال کنید.", "ok");
+      const link = document.createElement("a");
+      link.href = whatsappUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "باز کردن واتساپ و ارسال سفارش";
+      statusBox.appendChild(document.createElement("br"));
+      statusBox.appendChild(link);
+    }
+    window.scrollTo({top:0,behavior:"smooth"});
+  }catch(error){
+    if (whatsappWindow && !whatsappWindow.closed) whatsappWindow.close();
+    showStatus("ثبت سفارش انجام نشد. اتصال اینترنت و تنظیمات انتشار را بررسی کنید و دوباره تلاش کنید.", "err");
+    console.error(error);
+  }finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = "ثبت سفارش";
+  }
+});
+</script>
+</body>
+</html>
